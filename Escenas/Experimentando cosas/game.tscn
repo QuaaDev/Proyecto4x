@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://xeg5gmipk5er"]
+
+[ext_resource type="PackedScene" uid="uid://copb7vtbdp31c" path="res://Escenas/Experimentando cosas/grid.tscn" id="1_cin0t"]
+[ext_resource type="PackedScene" uid="uid://bjgvm28n1ejt4" path="res://Escenas/Experimentando cosas/player_a.tscn" id="2_nvkqg"]
+
+[node name="Game" type="Node"]
+
+[node name="Grid" parent="." instance=ExtResource("1_cin0t")]
+
+[node name="PlayerA" parent="Grid" instance=ExtResource("2_nvkqg")]
