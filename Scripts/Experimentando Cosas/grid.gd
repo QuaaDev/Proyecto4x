@@ -1,4 +1,5 @@
 extends Node2D
+@onready var deteccion_mouse: Area2D = $"Deteccion Mouse"
 
 const GRID_SIZE := 10  # Tamaño de la cuadrícula (10x10)
 const CELL_SIZE := 50  # Tamaño de cada celda (debe coincidir con el de la serpiente)

@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://xeg5gmipk5er"]
+[gd_scene load_steps=4 format=3 uid="uid://xeg5gmipk5er"]
 
 [ext_resource type="PackedScene" uid="uid://copb7vtbdp31c" path="res://Escenas/Experimentando cosas/grid.tscn" id="1_cin0t"]
+[ext_resource type="Script" uid="uid://ctwe8v6yfbacn" path="res://Scripts/Experimentando Cosas/administrador_soldados.gd" id="1_nvkqg"]
 [ext_resource type="PackedScene" uid="uid://bjgvm28n1ejt4" path="res://Escenas/Experimentando cosas/player_a.tscn" id="2_nvkqg"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node2D"]
+script = ExtResource("1_nvkqg")
 
 [node name="Grid" parent="." instance=ExtResource("1_cin0t")]
+
+[node name="PlayerA2" parent="Grid" instance=ExtResource("2_nvkqg")]
+position = Vector2(363, -2)
 
 [node name="PlayerA" parent="Grid" instance=ExtResource("2_nvkqg")]

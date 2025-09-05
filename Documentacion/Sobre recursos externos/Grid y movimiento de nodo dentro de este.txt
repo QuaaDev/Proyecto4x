@@ -1,1 +1,4 @@
 Fuente: https://www.youtube.com/watch?v=xcWlrnKu0gs&ab_channel=BluuGames
+
+Detectar mouse sobre PlayerA: ColorRect/Mouse/Filter ha sido cambiado a Ignore para que la deteccion funcione bien
+PlayerA Input Mouse fue cambiado a True

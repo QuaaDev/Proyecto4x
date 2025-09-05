@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://copb7vtbdp31c"]
+[gd_scene load_steps=3 format=3 uid="uid://copb7vtbdp31c"]
 
 [ext_resource type="Script" uid="uid://d2sm78gjhxs07" path="res://Scripts/Experimentando Cosas/grid.gd" id="1_p03yk"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p03yk"]
+size = Vector2(500, 500)
+
 [node name="Grid" type="Node2D"]
 script = ExtResource("1_p03yk")
+
+[node name="Deteccion Mouse" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deteccion Mouse"]
+position = Vector2(251, 249)
+shape = SubResource("RectangleShape2D_p03yk")
+debug_color = Color(0.866667, 0, 0.858824, 0.0627451)
