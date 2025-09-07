@@ -11,5 +11,6 @@ script = ExtResource("1_nvkqg")
 
 [node name="PlayerA2" parent="Grid" instance=ExtResource("2_nvkqg")]
 position = Vector2(363, -2)
+aliado = false
 
 [node name="PlayerA" parent="Grid" instance=ExtResource("2_nvkqg")]

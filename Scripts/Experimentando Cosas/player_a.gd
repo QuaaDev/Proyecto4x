@@ -2,15 +2,39 @@ extends StaticBody2D
 
 #----------Referencias--------------
 @onready var nodo_administrador = self.get_parent().get_parent() #Referencia al nodo administrador
+@onready var detectar_enemigo: RayCast2D = $DetectarEnemigo
+@onready var cd_ataque: Timer = $cd_ataque
+
 #----------Referencias--------------
 var estoy_seleccionado := false
 var speed := 3
 var direction := Vector2.ZERO
 var cell_size := 50 #Tamaño de la cuadricula sobre la cual nos queremos mover
 var is_moving := false
+@export var aliado := true
+@export var vida : int = 10
+@export var ataque : int = 5
+@export var armadura : int = 2
 
 func _ready() -> void:
-	pass
+	#Cambia el collision_layer para diferenciar aliados de enemigos
+	#Cambia la collision_mask para detectar siempre a los enemigos de su bando
+	#Cambia la direccion a la que apunta el raycast segun el bando
+	if aliado: 
+		collision_layer = 1
+		detectar_enemigo.collision_mask = 2
+		detectar_enemigo.target_position = Vector2(0,-30)
+	else:
+		collision_layer = 2
+		detectar_enemigo.collision_mask = 1
+		detectar_enemigo.target_position = Vector2(0,30) 
+
+func _physics_process(delta):
+	#Si el raycast detecta una colision y el ataque esta disponible, ejecuta el ataque
+	if detectar_enemigo.is_colliding():
+		detectar_enemigo.enabled = false
+		cd_ataque.start()
+		detectar_enemigo.get_collider().perder_vida(ataque)
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	#Si este objeto en particular detecta el click del mouse, ejecuta el codigo
@@ -51,13 +75,47 @@ func move_to_next_tile() -> void:
 
 func move_finish() -> void:
 	is_moving = false
-
+	
+func perder_vida(daño : int) -> void:
+	var daño_a_recibir = (daño - armadura) #La armadura reduce el daño
+	if daño <= 0: #Si el daño es menor a 1, siempre recibe 1 de daño
+		daño_a_recibir = 1
+	set_vida(vida - daño_a_recibir) #Aplica el daño
+	print(vida)
+	
 #--------------------Get y Set-------------------
 
-func set_estoy_seleccionado(x : bool):
+func set_estoy_seleccionado(x : bool) -> void:
 	estoy_seleccionado = x
 
 func get_estoy_seleccionado() -> bool:
 	return estoy_seleccionado
+
+func get_vida() -> int:
+	return vida
+
+func set_vida(x : int) -> void:
+	#Si la vida es menor a 1, se elimina el objeto
+	if x <= 0:
+		queue_free()
+	else:
+		vida = x
+	
+func get_ataque() -> int:
+	return ataque
+	
+func set_ataque(x : int) -> void:
+	ataque = x
+	
+func get_armadura() -> int:
+	return armadura
+
+func set_armadura(x : int) -> void:
+	armadura = x
 	
 #--------------------Get y Set-------------------
+
+
+func cd_ataque_timeout() -> void:
+	#Al acabar el cd activa el raycast para realizar ataques
+	detectar_enemigo.enabled = true

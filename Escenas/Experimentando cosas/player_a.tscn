@@ -6,8 +6,8 @@
 size = Vector2(49, 49)
 
 [node name="PlayerA" type="StaticBody2D"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 0
+collision_mask = 0
 input_pickable = true
 script = ExtResource("1_vs64r")
 
@@ -20,4 +20,13 @@ mouse_filter = 2
 position = Vector2(25, 25)
 shape = SubResource("RectangleShape2D_6wfbj")
 
+[node name="DetectarEnemigo" type="RayCast2D" parent="."]
+position = Vector2(25, 25)
+target_position = Vector2(0, -30)
+collision_mask = 0
+
+[node name="cd_ataque" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="timeout" from="cd_ataque" to="." method="cd_ataque_timeout"]
