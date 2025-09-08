@@ -19,12 +19,23 @@ var color_original : Color
 @export var armadura : int = 2
 @export var rango_ataque : int = 1
 @export var cd_ataque_variable : float = 1.0
+@export var sprite_unidad_path : String
 
 func _ready() -> void:
 	input_pickable = true #Hace que siempre sea seleccionado por el mouse
+	#---------Asignar sprite----------
+	#Unicamente hay que colocar un path valido y el codigo hace todo
+	if sprite_unidad_path != null:
+		var sprite_unidad = Sprite2D.new()
+		sprite_unidad.texture = load(sprite_unidad_path)
+		sprite_unidad.centered = false
+		add_child(sprite_unidad)
+	#---------Asignar sprite----------
+	#-----------Conectar señales---------
 	animacion_recibir_daño.timeout.connect(_on_animacion_recibir_daño_timeout)
 	cd_ataque.timeout.connect(cd_ataque_timeout)
 	self.input_event.connect(_on_input_event)
+	#-----------Conectar señales---------
 	#Cambia el collision_layer para diferenciar aliados de enemigos
 	#Cambia la collision_mask para detectar siempre a los enemigos de su bando
 	#Cambia la direccion a la que apunta el raycast segun el bando junto a su rango con la siguiente formula
@@ -58,7 +69,7 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 			#Si se hace click izquierdo sobre self, envia su informacion al administrador de soldados
 			#Para activar su movimiento
 			nodo_administrador.seleccionar_soldado(self)
-			print("Left mouse button clicked!")
+			#print("Left mouse button clicked!")
 
 func _input(event: InputEvent) -> void:
 	if estoy_seleccionado: #Activa el movimiento si se selecciona esta unidad

@@ -12,6 +12,7 @@ ataque = 3
 armadura = 0
 rango_ataque = 4
 cd_ataque_variable = 0.5
+sprite_unidad_path = "res://Assets/assets_unidades/arquero.png"
 metadata/_custom_type_script = "uid://c7pktjvxm0r0b"
 
 [node name="ColorRect" type="ColorRect" parent="."]
