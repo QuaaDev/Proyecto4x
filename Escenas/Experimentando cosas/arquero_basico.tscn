@@ -10,7 +10,7 @@ script = ExtResource("1_17s63")
 vida = 5
 ataque = 3
 armadura = 0
-rango_ataque = 3
+rango_ataque = 4
 cd_ataque_variable = 0.5
 metadata/_custom_type_script = "uid://c7pktjvxm0r0b"
 
@@ -34,7 +34,3 @@ one_shot = true
 [node name="animacion_recibir_daño" type="Timer" parent="."]
 wait_time = 0.05
 one_shot = true
-
-[connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="timeout" from="cd_ataque" to="." method="cd_ataque_timeout"]
-[connection signal="timeout" from="animacion_recibir_daño" to="." method="_on_animacion_recibir_daño_timeout"]

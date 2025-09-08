@@ -31,7 +31,3 @@ one_shot = true
 [node name="animacion_recibir_daño" type="Timer" parent="."]
 wait_time = 0.05
 one_shot = true
-
-[connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="timeout" from="cd_ataque" to="." method="cd_ataque_timeout"]
-[connection signal="timeout" from="animacion_recibir_daño" to="." method="_on_animacion_recibir_daño_timeout"]

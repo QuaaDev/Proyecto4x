@@ -22,6 +22,9 @@ var color_original : Color
 
 func _ready() -> void:
 	input_pickable = true #Hace que siempre sea seleccionado por el mouse
+	animacion_recibir_daño.timeout.connect(_on_animacion_recibir_daño_timeout)
+	cd_ataque.timeout.connect(cd_ataque_timeout)
+	self.input_event.connect(_on_input_event)
 	#Cambia el collision_layer para diferenciar aliados de enemigos
 	#Cambia la collision_mask para detectar siempre a los enemigos de su bando
 	#Cambia la direccion a la que apunta el raycast segun el bando junto a su rango con la siguiente formula
