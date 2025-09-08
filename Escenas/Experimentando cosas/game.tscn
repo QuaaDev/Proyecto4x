@@ -1,16 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://xeg5gmipk5er"]
+[gd_scene load_steps=5 format=3 uid="uid://xeg5gmipk5er"]
 
 [ext_resource type="PackedScene" uid="uid://copb7vtbdp31c" path="res://Escenas/Experimentando cosas/grid.tscn" id="1_cin0t"]
 [ext_resource type="Script" uid="uid://ctwe8v6yfbacn" path="res://Scripts/Experimentando Cosas/administrador_soldados.gd" id="1_nvkqg"]
-[ext_resource type="PackedScene" uid="uid://bjgvm28n1ejt4" path="res://Escenas/Experimentando cosas/player_a.tscn" id="2_nvkqg"]
+[ext_resource type="PackedScene" uid="uid://bjgvm28n1ejt4" path="res://Escenas/Experimentando cosas/soldado_basico.tscn" id="2_nvkqg"]
+[ext_resource type="PackedScene" uid="uid://cknbjoq8ed00x" path="res://Escenas/Experimentando cosas/arquero_basico.tscn" id="4_p35v7"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_nvkqg")
 
 [node name="Grid" parent="." instance=ExtResource("1_cin0t")]
 
-[node name="PlayerA2" parent="Grid" instance=ExtResource("2_nvkqg")]
-position = Vector2(363, -2)
+[node name="Enemigo0" parent="Grid" instance=ExtResource("2_nvkqg")]
+position = Vector2(250, 150)
 aliado = false
 
-[node name="PlayerA" parent="Grid" instance=ExtResource("2_nvkqg")]
+[node name="Enemigo1" parent="Grid" instance=ExtResource("2_nvkqg")]
+position = Vector2(300, 150)
+aliado = false
+
+[node name="Enemigo2" parent="Grid" instance=ExtResource("2_nvkqg")]
+position = Vector2(200, 150)
+aliado = false
+
+[node name="Aliado0" parent="Grid" instance=ExtResource("2_nvkqg")]
+position = Vector2(200, 250)
+
+[node name="Aliado1" parent="Grid" instance=ExtResource("2_nvkqg")]
+position = Vector2(250, 250)
+
+[node name="Aliado2" parent="Grid" instance=ExtResource("2_nvkqg")]
+position = Vector2(300, 250)
+
+[node name="arquero_basico" parent="Grid" instance=ExtResource("4_p35v7")]
+position = Vector2(300, 350)
+
+[node name="arquero_basico2" parent="Grid" instance=ExtResource("4_p35v7")]
+position = Vector2(250, 350)
+
+[node name="arquero_enemigo" parent="Grid" instance=ExtResource("4_p35v7")]
+position = Vector2(300, 50)
+aliado = false

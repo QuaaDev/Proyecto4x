@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://cknbjoq8ed00x"]
+
+[ext_resource type="Script" uid="uid://c7pktjvxm0r0b" path="res://Scripts/Experimentando Cosas/soldado_basico.gd" id="1_17s63"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_17s63"]
+size = Vector2(49, 49)
+
+[node name="arquero_basico" type="StaticBody2D"]
+script = ExtResource("1_17s63")
+vida = 5
+ataque = 3
+armadura = 0
+rango_ataque = 3
+cd_ataque_variable = 0.5
+metadata/_custom_type_script = "uid://c7pktjvxm0r0b"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 50.0
+offset_bottom = 50.0
+mouse_filter = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(25, 25)
+shape = SubResource("RectangleShape2D_17s63")
+
+[node name="DetectarEnemigo" type="RayCast2D" parent="."]
+position = Vector2(25, 25)
+target_position = Vector2(0, -30)
+collision_mask = 0
+
+[node name="cd_ataque" type="Timer" parent="."]
+one_shot = true
+
+[node name="animacion_recibir_daño" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="timeout" from="cd_ataque" to="." method="cd_ataque_timeout"]
+[connection signal="timeout" from="animacion_recibir_daño" to="." method="_on_animacion_recibir_daño_timeout"]
