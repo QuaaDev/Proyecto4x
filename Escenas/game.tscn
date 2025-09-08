@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://xeg5gmipk5er"]
 
-[ext_resource type="PackedScene" uid="uid://copb7vtbdp31c" path="res://Escenas/Experimentando cosas/grid.tscn" id="1_cin0t"]
-[ext_resource type="Script" uid="uid://ctwe8v6yfbacn" path="res://Scripts/Experimentando Cosas/administrador_soldados.gd" id="1_nvkqg"]
-[ext_resource type="PackedScene" uid="uid://bjgvm28n1ejt4" path="res://Escenas/Experimentando cosas/soldado_basico.tscn" id="2_nvkqg"]
-[ext_resource type="PackedScene" uid="uid://cknbjoq8ed00x" path="res://Escenas/Experimentando cosas/arquero_basico.tscn" id="4_p35v7"]
+[ext_resource type="PackedScene" uid="uid://copb7vtbdp31c" path="res://Escenas/grid.tscn" id="1_cin0t"]
+[ext_resource type="Script" uid="uid://ctwe8v6yfbacn" path="res://Scripts/administrador_soldados.gd" id="1_nvkqg"]
+[ext_resource type="PackedScene" uid="uid://bjgvm28n1ejt4" path="res://Escenas/unidades/soldado_basico.tscn" id="2_nvkqg"]
+[ext_resource type="PackedScene" uid="uid://cknbjoq8ed00x" path="res://Escenas/unidades/arquero_basico.tscn" id="4_p35v7"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_nvkqg")

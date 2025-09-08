@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cknbjoq8ed00x"]
 
-[ext_resource type="Script" uid="uid://c7pktjvxm0r0b" path="res://Scripts/Experimentando Cosas/soldado_basico.gd" id="1_17s63"]
+[ext_resource type="Script" uid="uid://c7pktjvxm0r0b" path="res://Scripts/soldado_basico.gd" id="1_17s63"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_17s63"]
 size = Vector2(49, 49)
