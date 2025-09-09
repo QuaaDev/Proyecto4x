@@ -11,32 +11,32 @@ script = ExtResource("1_nvkqg")
 [node name="Grid" parent="." instance=ExtResource("1_cin0t")]
 
 [node name="Enemigo0" parent="Grid" instance=ExtResource("2_nvkqg")]
-position = Vector2(250, 150)
+position = Vector2(200, 50)
 aliado = false
 
 [node name="Enemigo1" parent="Grid" instance=ExtResource("2_nvkqg")]
-position = Vector2(300, 150)
+position = Vector2(300, 50)
 aliado = false
 
 [node name="Enemigo2" parent="Grid" instance=ExtResource("2_nvkqg")]
-position = Vector2(200, 150)
+position = Vector2(250, 50)
 aliado = false
 
 [node name="Aliado0" parent="Grid" instance=ExtResource("2_nvkqg")]
-position = Vector2(200, 250)
+position = Vector2(250, 400)
 
 [node name="Aliado1" parent="Grid" instance=ExtResource("2_nvkqg")]
-position = Vector2(250, 250)
+position = Vector2(200, 400)
 
 [node name="Aliado2" parent="Grid" instance=ExtResource("2_nvkqg")]
-position = Vector2(300, 250)
+position = Vector2(300, 400)
 
 [node name="arquero_basico" parent="Grid" instance=ExtResource("4_p35v7")]
-position = Vector2(300, 350)
+position = Vector2(300, 450)
 
 [node name="arquero_basico2" parent="Grid" instance=ExtResource("4_p35v7")]
-position = Vector2(250, 350)
+position = Vector2(250, 450)
 
 [node name="arquero_enemigo" parent="Grid" instance=ExtResource("4_p35v7")]
-position = Vector2(300, 50)
+position = Vector2(300, 0)
 aliado = false
