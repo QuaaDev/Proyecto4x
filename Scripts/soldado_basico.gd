@@ -8,7 +8,7 @@ class_name soldado_basico
 @onready var grid = self.get_parent() #Referencia al grid
 #----------Referencias--------------
 var estoy_seleccionado := false
-var speed := 1
+var speed := 0.5
 var direction := Vector2.ZERO
 var cell_size := 50 #Tamaño de la cuadricula sobre la cual nos queremos mover
 var is_moving := false
@@ -22,6 +22,7 @@ var cantidad_a_mover : int
 @export var cd_ataque_variable : float = 1.0
 @export var sprite_unidad_path : String
 @export var movimiento_automatico : bool = true
+@export var tipo_unidad_grupo : String
 
 func _ready() -> void:
 	input_pickable = true #Hace que siempre sea seleccionado por el mouse
@@ -46,6 +47,8 @@ func _ready() -> void:
 	#Cambia el color del canvas 
 	#Almacena su color original
 	#Define cuantos pixeles se movera (es temporal, mas adelante sera mas complejo)
+	#Define si esta en grupo aliado o enemigo
+	#Define si esta en el grupo melee o rango
 	if aliado: 
 		collision_layer = 1
 		detectar_enemigo.collision_mask = 2
@@ -53,6 +56,8 @@ func _ready() -> void:
 		modulate = Color("Blue")
 		color_original = Color("Blue")
 		cantidad_a_mover = -cell_size
+		self.add_to_group("Aliados")
+		grupo_elegir_tipo_unidad()
 	else:
 		collision_layer = 2
 		detectar_enemigo.collision_mask = 1
@@ -60,10 +65,12 @@ func _ready() -> void:
 		modulate = Color("Green")
 		color_original = Color("Green")
 		cantidad_a_mover = cell_size
+		self.add_to_group("Enemigos")
+		grupo_elegir_tipo_unidad()
 	#Informa al grid sobre mi posicion actual
 	#posicion_local_al_grid = Vector2((position.x / grid.CELL_SIZE),(position.y/grid.CELL_SIZE))
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	#Si el raycast detecta una colision y el ataque esta disponible, ejecuta el ataque
 	if detectar_enemigo.is_colliding():
 		detectar_enemigo.enabled = false
@@ -80,7 +87,7 @@ func _physics_process(delta):
 				else:
 					direction = Vector2.DOWN
 				#Actualiza su anterior posicion en el grid para que figure como libre
-				grid.actualizar_diccionario_movimiento(Vector2((position.x / grid.CELL_SIZE),(position.y/grid.CELL_SIZE)) , true)
+				abandonando_posicion()
 				move_to_next_tile() #Ejecuta el movimiento
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -132,6 +139,9 @@ func perder_vida(daño : int) -> void:
 	animacion_recibir_daño.start() 
 	#print(vida)
 	
+func abandonando_posicion() -> void:
+	#Hace que su posicion actual figure como libre, utilizar al aplicar movimientos
+	grid.actualizar_diccionario_movimiento(Vector2((position.x / grid.CELL_SIZE),(position.y/grid.CELL_SIZE)) , true)
 #--------------------Get y Set-------------------
 
 func set_estoy_seleccionado(x : bool) -> void:
@@ -167,7 +177,7 @@ func set_armadura(x : int) -> void:
 	
 #--------------------Get y Set-------------------
 
-
+#-----------Señales----------------
 func cd_ataque_timeout() -> void:
 	#Al acabar el cd activa el raycast para realizar ataques
 	detectar_enemigo.enabled = true
@@ -176,8 +186,23 @@ func cd_ataque_timeout() -> void:
 
 func _on_animacion_recibir_daño_timeout() -> void:
 	modulate = color_original
-
+	
+#-----------Señales----------------
 #Cuando el grid termina su ready, este envia la informacion sobre su ubicacion actual
 #Para actualizar el diccionario
 func grid_esta_ready() -> void:
 	grid.actualizar_diccionario_movimiento(Vector2((position.x / grid.CELL_SIZE),(position.y/grid.CELL_SIZE)) , false)
+
+#----------Grupos------------------
+func grupo_mi_nombre() -> void:
+	print(self.name)
+
+func grupo_elegir_tipo_unidad() -> void:
+	#Se encarga de asignar el grupo indicado para el tipo de unidad
+	if tipo_unidad_grupo == "Soldado":
+		self.add_to_group("Soldados")
+	elif  tipo_unidad_grupo == "Arquero":
+		self.add_to_group("Arqueros")
+	else:
+		print("Error tipo unidad grupo, ningun grupo coincide")
+#----------Grupos------------------

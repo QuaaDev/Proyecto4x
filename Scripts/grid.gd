@@ -1,6 +1,6 @@
 extends Node2D
 @onready var deteccion_mouse: Area2D = $"Deteccion Mouse"
-
+@onready var canvas_layer: CanvasLayer = $"../CanvasLayer"
 @export var GRID_SIZE := 10  # Tamaño de la cuadrícula (10x10)
 @export var CELL_SIZE := 50  # Tamaño de cada celda (debe coincidir con el de la serpiente)
 
@@ -25,9 +25,17 @@ func draw_grid() -> void:
 		draw_line(Vector2(0, y_pos), Vector2(GRID_SIZE * CELL_SIZE, y_pos), color, 2)
 
 func _ready() -> void:
-	queue_redraw()  # Redibujar la cuadrícula cuando se carg
+	queue_redraw()  # Redibujar la cuadrícula cuando se carga
 	crear_diccionario_del_mapa(diccionario_cuadricula_movimientos)
-
+	#botones para ordenar formaciones, es solo debug
+	canvas_layer.get_child(0).get_child(0).pressed.connect(ordenar_aliado_arquero)
+	canvas_layer.get_child(0).get_child(1).pressed.connect(ordenar_aliado_soldado)
+	canvas_layer.get_child(0).get_child(2).pressed.connect(ordenar_enemigo_arquero)
+	canvas_layer.get_child(0).get_child(3).pressed.connect(ordenar_enemigo_soldado)
+	#print("llamando aliados")
+	#get_tree().call_group("Aliados", "grupo_mi_nombre")
+	#print("Llamando enemigos")
+	#get_tree().call_group("Enemigos", "grupo_mi_nombre")
 func crear_diccionario_del_mapa(diccionario_a_llenar : Dictionary) -> void:
 	#Crea y carga el diccionario con valores
 	for y in GRID_SIZE+1: #Eje y
@@ -60,3 +68,50 @@ func actualizar_diccionario_movimiento(posicion : Vector2, valor : bool) -> void
 func coso():
 	#print(diccionario_cuadricula_movimientos)
 	pass
+
+#------------grupos---------------
+#Obtiene la lista de unidades divida en bandos, solo usar Aliados y Enemigos
+func obtener_lista_de_bando(bando : String) -> Array:
+	if bando == "Aliados" or bando == "Enemigos":
+		return get_tree().get_nodes_in_group(bando)
+	else: 
+		print(bando + " no existe en los grupos de bando, error amarillo")
+		var error_null = [null]
+		return error_null
+		
+#obtiene la lista de unidades divida en tipos, solo usar Arqueros y Soldados
+func obtener_lista_tipo_de_unidad(tipo : String) -> Array:
+	if tipo == "Arqueros" or tipo == "Soldados":
+		return get_tree().get_nodes_in_group(tipo)
+	else:
+		print(tipo + " no existe en los grupos de tipo, error amarillo")
+		var error_null = [null]
+		return error_null
+
+func seleccionar_unidades_de_un_tipo(bando : String, tipo : String):
+	#Selecciona las unidades segun su bando (aliado/enemigo) y su tipo (arquero/soldado)
+	#Obtiene las listas
+	var unidades_del_bando = obtener_lista_de_bando(bando)
+	var unidades_del_tipo = obtener_lista_tipo_de_unidad(tipo)
+	var unidades_validas = []
+	for unidad in unidades_del_bando:
+		#Selecciona todas las unidades de X bando
+		if unidad in unidades_del_tipo:
+			#Filtra las unidades segun su tipo
+			unidades_validas.append(unidad)
+	#Objetivo de debug
+	for i in unidades_validas:
+		print(i.name)
+
+#--------------grupos-----------
+
+#---------Debug------------
+func ordenar_aliado_soldado():
+	seleccionar_unidades_de_un_tipo("Aliados", "Soldados")
+func ordenar_aliado_arquero():
+	seleccionar_unidades_de_un_tipo("Aliados", "Arqueros")
+func ordenar_enemigo_soldado():
+	seleccionar_unidades_de_un_tipo("Enemigos", "Soldados")
+func ordenar_enemigo_arquero():
+	seleccionar_unidades_de_un_tipo("Enemigos", "Arqueros")
+#--------debug------------

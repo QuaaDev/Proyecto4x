@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dqw1w0i14axyk"]
+
+[node name="Botones_formaciones" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="arquerosaliados" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -261.0
+offset_top = 152.0
+offset_bottom = 183.0
+grow_horizontal = 0
+text = "ORDENAME ARQUEROS ALIADOS"
+
+[node name="soldadosaliados" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -265.0
+offset_top = 112.0
+offset_right = -4.0
+offset_bottom = 143.0
+grow_horizontal = 0
+text = "ORDENAME SOLDADOS ALIADOS"
+
+[node name="arquerosenemigos" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -277.0
+offset_top = 72.0
+offset_right = -1.0
+offset_bottom = 103.0
+grow_horizontal = 0
+text = "ORDENAME ARQUEROS ENEMIGOS"
+
+[node name="soldadosenemigos" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -273.0
+offset_top = 35.0
+offset_right = -1.0
+offset_bottom = 66.0
+grow_horizontal = 0
+text = "ORDENAME SOLDADOSENEMIGOS"
