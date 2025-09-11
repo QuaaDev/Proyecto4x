@@ -1,7 +1,7 @@
 extends Node2D
 @onready var deteccion_mouse: Area2D = $"Deteccion Mouse"
 @onready var canvas_layer: CanvasLayer = $"../CanvasLayer"
-@export var GRID_SIZE := 10  # Tamaño de la cuadrícula (10x10)
+@export var GRID_SIZE : float = 10  # Tamaño de la cuadrícula (10x10)
 @export var CELL_SIZE := 50  # Tamaño de cada celda (debe coincidir con el de la serpiente)
 
 var diccionario_cuadricula_movimientos : Dictionary
@@ -65,10 +65,60 @@ func solicitar_movimiento(posicion : Vector2) -> bool:
 #Actualiza el diccionario con nueva informacion
 func actualizar_diccionario_movimiento(posicion : Vector2, valor : bool) -> void:
 	diccionario_cuadricula_movimientos[posicion] = valor
+
 func coso():
 	#print(diccionario_cuadricula_movimientos)
 	pass
 
+func cambiar_formacion(bando : String, tipo : String):
+	var unidades_a_mover = []
+	var coordenada_y : int
+	var filas_a_ocupar = [] #Eje Y
+	var grid_impar : bool
+	var ubicaciones_a_ocupar = []
+	var comodin_ubicaciones_a_ocupar = []
+	var mitad_del_grid = ceil(GRID_SIZE/2) #La mitad del grid redondeado hacia arriba
+	if int(GRID_SIZE) % 2 == 0: #Averigua si el grid es impar o par
+		#Tiene un +1 porque al empezar en 0, lo impar es par y viceversa.
+		grid_impar = false
+	else:
+		grid_impar = true
+	if bando == "Aliados":
+		coordenada_y = 5
+	else:
+		coordenada_y = 4
+	unidades_a_mover = seleccionar_unidades_de_un_tipo(bando, "Soldados").duplicate()
+	if unidades_a_mover.size() > GRID_SIZE:
+		for cantidad in range(1,ceil(unidades_a_mover.size() / GRID_SIZE)):
+			#Cuenta la cantidad de filas que hay que ocupar
+			filas_a_ocupar.append(cantidad)
+	else:
+		filas_a_ocupar.append(1)
+	print("filas a ocupar: " + str(filas_a_ocupar))
+	print("Mitad del grid: "+str(mitad_del_grid))
+	for eje_y in filas_a_ocupar:
+		for eje_x in mitad_del_grid:
+			if bando == "Aliados":
+				if !grid_impar: #Primero inspecciona los numeros par
+					ubicaciones_a_ocupar.append(Vector2(mitad_del_grid + eje_x, 4+eje_y))
+					ubicaciones_a_ocupar.append(Vector2(mitad_del_grid - eje_x - 1, 4+eje_y))
+				else: #Luego inspecciona los numeros impar
+					if eje_x == 0: 
+						ubicaciones_a_ocupar.append(Vector2(mitad_del_grid - 1, 4+eje_y))
+					else:
+						ubicaciones_a_ocupar.append(Vector2(mitad_del_grid + (eje_x - 1), 4+eje_y))
+						ubicaciones_a_ocupar.append(Vector2(mitad_del_grid - (eje_x + 1), 4+eje_y))
+						
+	print("Ubicaciones a ocupar:Vector(Y,X) " + str(ubicaciones_a_ocupar))
+	
+	for unidad in unidades_a_mover: #Actualiza a las unidades
+		var ubicacion_a_moverse = ubicaciones_a_ocupar[0] #Obtiene la proxima ubicacion que debe ocuparse
+		ubicaciones_a_ocupar.remove_at(0) #Elimina de la lista la ubicacion que ya fue ocupada
+		unidad.abandonando_posicion()#Deja su anterior ubicacion como libre
+		unidad.movimiento_desde_formacion(ubicacion_a_moverse)#Activa el movimiento a la nueva ubicacion
+		
+		
+		
 #------------grupos---------------
 #Obtiene la lista de unidades divida en bandos, solo usar Aliados y Enemigos
 func obtener_lista_de_bando(bando : String) -> Array:
@@ -88,7 +138,7 @@ func obtener_lista_tipo_de_unidad(tipo : String) -> Array:
 		var error_null = [null]
 		return error_null
 
-func seleccionar_unidades_de_un_tipo(bando : String, tipo : String):
+func seleccionar_unidades_de_un_tipo(bando : String, tipo : String) -> Array:
 	#Selecciona las unidades segun su bando (aliado/enemigo) y su tipo (arquero/soldado)
 	#Obtiene las listas
 	var unidades_del_bando = obtener_lista_de_bando(bando)
@@ -102,12 +152,12 @@ func seleccionar_unidades_de_un_tipo(bando : String, tipo : String):
 	#Objetivo de debug
 	for i in unidades_validas:
 		print(i.name)
-
+	return unidades_validas
 #--------------grupos-----------
 
 #---------Debug------------
 func ordenar_aliado_soldado():
-	seleccionar_unidades_de_un_tipo("Aliados", "Soldados")
+	cambiar_formacion("Aliados", "Soldados")
 func ordenar_aliado_arquero():
 	seleccionar_unidades_de_un_tipo("Aliados", "Arqueros")
 func ordenar_enemigo_soldado():

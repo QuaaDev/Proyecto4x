@@ -127,6 +127,12 @@ func move_to_next_tile() -> void:
 	#Objeto a aplicar / propiedad a editar / ubicacion objetivo / velocidad de la animacion
 	tween.tween_callback(move_finish)
 
+func movimiento_desde_formacion(ubicacion_objetivo : Vector2):
+	var mi_posicion_convertida_a_local = Vector2(position.x/ cell_size, position.y /cell_size)
+	direction = ubicacion_objetivo - mi_posicion_convertida_a_local
+	print("ubicacion objetivo" + str(ubicacion_objetivo)+" - mi posicion convertida a local" + str(mi_posicion_convertida_a_local)+" = " + str(direction))
+	move_to_next_tile()
+
 func move_finish() -> void:
 	is_moving = false
 	
